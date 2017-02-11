@@ -1,13 +1,17 @@
 #include "game.h"
 
 void Game::init() {
-    layout = levels[1];
+    if (level >= nlevels) {
+        printf("Game Complete!\n");
+        quit(window);
+    }
+    layout = levels[level];
     board.init(layout, nrows, ncols);
     cube1.init();
     cube2.init();
 
-    cube_r = levels_start[1][0];
-    cube_c = levels_start[1][1];
+    cube_r = levels_start[level][0];
+    cube_c = levels_start[level][1];
     horizontal = false;
     horizontal_row = false;
 }
@@ -98,8 +102,9 @@ bool Game::move(direction_t dir) {
     } else {
         square_t h = get_square(cube_r, cube_c);
         if (h == SQUARE_HOLE) {
-            printf("Won!\n");
-            quit(window);
+            printf("Completed Level %d!\n", level+1);
+            level++;
+            init();
         } else if (h == SQUARE_NONE) return false;
     }
     return true;

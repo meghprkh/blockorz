@@ -12,6 +12,8 @@ public:
     void draw();
 private:
     Square squares[50][50];
+    square_t *layout;
+    int nrows, ncols;
 };
 
 #endif // BOARD_H

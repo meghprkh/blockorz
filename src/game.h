@@ -20,6 +20,7 @@ private:
     bool horizontal, horizontal_row;
     int nrows = 20, ncols = 20;
     square_t get_square(int r, int c);
+    int level = 0;
 };
 
 #endif // GAME_H
