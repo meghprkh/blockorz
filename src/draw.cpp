@@ -1,7 +1,7 @@
 #include "main.h"
 #include "assets.h"
 
-double camera_rotation_angle = 90, camera_y, camera_zoom = 0;
+double camera_rotation_angle = -135, camera_y = 2, camera_zoom = -1;
 
 /* Render the scene with openGL */
 /* Edit this function according to your assignment */

@@ -11,6 +11,7 @@ public:
     Game() {}
     void init();
     void draw();
+    void move(direction_t dir);
 private:
     square_t layout[3][4] = {
         {SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL},
@@ -21,6 +22,8 @@ private:
     Cube cube1, cube2;
     int cube_r, cube_c;
     bool horizontal, horizontal_row;
+    int nrows = 3, ncols = 4;
+    square_t get_square(int r, int c);
 };
 
 #endif // GAME_H

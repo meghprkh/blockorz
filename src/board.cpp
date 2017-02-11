@@ -6,7 +6,7 @@ void Board::init()
         for (int c = 0; c < 4; c++) {
             if (layout[r][c] != SQUARE_NORMAL) continue;
             squares[r][c].init();
-            squares[r][c].set_position(r * 2, -1 - 0.05, c * -2);
+            squares[r][c].set_position(r * 2, -1 - 0.05, c * 2);
         }
     }
 }

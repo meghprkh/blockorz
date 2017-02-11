@@ -15,6 +15,18 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
         case GLFW_KEY_ESCAPE:
             quit(window);
             break;
+        case GLFW_KEY_LEFT:
+            game.move(DIR_LEFT);
+            break;
+        case GLFW_KEY_RIGHT:
+            game.move(DIR_RIGHT);
+            break;
+        case GLFW_KEY_UP:
+            game.move(DIR_UP);
+            break;
+        case GLFW_KEY_DOWN:
+            game.move(DIR_DOWN);
+            break;
         default:
             break;
         }
@@ -40,10 +52,10 @@ void mouseButton (GLFWwindow* window, int button, int action, int mods) {
 
 /* Process continuous input */
 void tick_input(GLFWwindow* window) {
-//    if (glfwGetKey(window, GLFW_KEY_LEFT)) cube.position.x -= 0.05;
-//    if (glfwGetKey(window, GLFW_KEY_RIGHT)) cube.position.x += 0.05;
-//    if (glfwGetKey(window, GLFW_KEY_UP)) cube.position.y += 0.05;
-//    if (glfwGetKey(window, GLFW_KEY_DOWN)) cube.position.y -= 0.05;
+//    if (glfwGetKey(window, GLFW_KEY_LEFT)) game.move(DIR_LEFT);
+//    if (glfwGetKey(window, GLFW_KEY_RIGHT)) game.move(DIR_RIGHT);
+//    if (glfwGetKey(window, GLFW_KEY_UP)) game.move(DIR_UP);
+//    if (glfwGetKey(window, GLFW_KEY_DOWN)) game.move(DIR_DOWN);
 //    if (glfwGetKey(window, GLFW_KEY_A)) cube.position.z += 0.05;
 //    if (glfwGetKey(window, GLFW_KEY_S)) cube.position.z -= 0.05;
     if (glfwGetKey(window, GLFW_KEY_SPACE)) camera_rotation_angle += 5;

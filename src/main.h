@@ -21,6 +21,7 @@
 using namespace std;
 
 // nonedit.cpp
+extern GLFWwindow* window;
 GLFWwindow* initGLFW (int width, int height);
 GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path);
 struct VAO* create3DObject (GLenum primitive_mode, int numVertices, const GLfloat* vertex_buffer_data, const GLfloat* color_buffer_data, GLenum fill_mode=GL_FILL);
