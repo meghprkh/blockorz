@@ -31,6 +31,7 @@ void draw3DObject (struct VAO* vao);
 void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods);
 void keyboardChar (GLFWwindow* window, unsigned int key);
 void mouseButton (GLFWwindow* window, int button, int action, int mods);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void tick_input(GLFWwindow* window);
 
 // other_handlers.cpp
@@ -63,7 +64,7 @@ struct GLMatrices {
 extern GLuint programID;
 extern GLMatrices Matrices;
 extern glm::mat4 VP;
-extern double camera_rotation_angle, camera_y;
+extern double camera_rotation_angle, camera_y, camera_zoom;
 
 // ---- Logic ----
 

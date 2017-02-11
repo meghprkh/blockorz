@@ -50,3 +50,7 @@ void tick_input(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_Z)) camera_y += 0.05;
     if (glfwGetKey(window, GLFW_KEY_X)) camera_y -= 0.05;
 }
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    camera_zoom += yoffset;
+}

@@ -1,7 +1,7 @@
 #include "main.h"
 #include "assets.h"
 
-double camera_rotation_angle = 90, camera_y;
+double camera_rotation_angle = 90, camera_y, camera_zoom = 0;
 
 /* Render the scene with openGL */
 /* Edit this function according to your assignment */
@@ -26,7 +26,7 @@ void draw ()
 
     // Compute ViewProject matrix as view/camera might not be changed for this frame (basic scenario)
     //  Don't change unless you are sure!!
-    VP = Matrices.projection * Matrices.view;
+    VP = Matrices.projection * Matrices.view * glm::scale(glm::vec3(exp(camera_zoom)));
 
     // Send our transformation to the currently bound shader, in the "MVP" uniform
     // For each model you render, since the MVP will be different (at least the M part)
