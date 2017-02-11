@@ -21,7 +21,7 @@ int main (int argc, char** argv)
 
     initGL (window, width, height);
 
-    Timer t60(1/60.0);
+    Timer t60(1/60.0), t240(1/240.0);
 
     /* Draw in loop */
     while (!glfwWindowShouldClose(window)) {
@@ -37,8 +37,10 @@ int main (int argc, char** argv)
             tick_input(window);
         }
 
-        // Poll for Keyboard and mouse events
-        glfwPollEvents();
+        if (t240.processTick()) {
+            // Poll for Keyboard and mouse events
+            glfwPollEvents();
+        }
     }
 
     quit(window);
