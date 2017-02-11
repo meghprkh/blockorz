@@ -7,12 +7,6 @@ void initGL (GLFWwindow* window, int width, int height)
 {
     /* Objects should be created before any other gl function and shaders */
     // Create the models
-
-    b1 = Brick(BRICK_RED);
-    b1.set_position(3, 0);
-    b2 = Brick(BRICK_BLACK);
-    b2.set_position(-3, 0);
-
     game.init();
 
     // Create and compile our GLSL program from the shaders

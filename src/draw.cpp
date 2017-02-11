@@ -34,7 +34,5 @@ void draw ()
     glm::mat4 MVP;	// MVP = Projection * View * Model
 
     // Scene render
-    b1.draw();
-    b2.draw();
     game.draw();
 }

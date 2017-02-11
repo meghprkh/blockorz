@@ -8,8 +8,6 @@ GLMatrices Matrices;
 glm::mat4 VP;
 
 void tick_elements() {
-    b1.tick();
-    b2.tick();
 }
 
 int main (int argc, char** argv)
