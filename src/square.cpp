@@ -56,6 +56,7 @@ void Square::init()
 }
 
 void Square::draw() {
+    if (this->object == NULL) return;
     Matrices.model = glm::mat4(1.0f);
     glm::mat4 translate = glm::translate (this->position);        // glTranslatef
     Matrices.model *= translate;

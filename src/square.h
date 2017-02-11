@@ -12,7 +12,7 @@ public:
     void set_position(float x, float y, float z);
     glm::vec3 position;
 private:
-    VAO* object;
+    VAO* object = NULL;
 };
 
 #endif // SQUARE_H
