@@ -26,7 +26,7 @@ void Game::draw() {
     cube2.draw();
 }
 
-void Game::move(direction_t dir) {
+bool Game::move(direction_t dir) {
     if (horizontal) {
         if (horizontal_row) {
             switch (dir) {
@@ -93,14 +93,15 @@ void Game::move(direction_t dir) {
             h1 = get_square(cube_r, cube_c);
             h2 = get_square(cube_r+1, cube_c);
         }
-        if (h1 == SQUARE_NONE || h2 == SQUARE_NONE) quit(window);
+        if (h1 == SQUARE_NONE || h2 == SQUARE_NONE) return false;
     } else {
         square_t h = get_square(cube_r, cube_c);
         if (h == SQUARE_HOLE) {
             printf("Won!\n");
             quit(window);
-        } else if (h == SQUARE_NONE) quit(window);
+        } else if (h == SQUARE_NONE) return false;
     }
+    return true;
 }
 
 square_t Game::get_square(int r, int c) {

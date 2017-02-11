@@ -11,25 +11,27 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
 
     }
     else if (action == GLFW_PRESS) {
+        bool game_status;
         switch (key) {
         case GLFW_KEY_ESCAPE:
             quit(window);
             break;
         case GLFW_KEY_LEFT:
-            game.move(DIR_LEFT);
+            game_status = game.move(DIR_LEFT);
             break;
         case GLFW_KEY_RIGHT:
-            game.move(DIR_RIGHT);
+            game_status = game.move(DIR_RIGHT);
             break;
         case GLFW_KEY_UP:
-            game.move(DIR_UP);
+            game_status = game.move(DIR_UP);
             break;
         case GLFW_KEY_DOWN:
-            game.move(DIR_DOWN);
+            game_status = game.move(DIR_DOWN);
             break;
         default:
             break;
         }
+        if (!game_status) game.init();
     }
 }
 

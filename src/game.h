@@ -11,7 +11,7 @@ public:
     Game() {}
     void init();
     void draw();
-    void move(direction_t dir);
+    bool move(direction_t dir);
 private:
     square_t layout[3][4] = {
         {SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL},
