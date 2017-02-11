@@ -1,12 +1,13 @@
 #include "game.h"
 
 void Game::init() {
+    layout = levels[1];
     board.init(layout, nrows, ncols);
     cube1.init();
     cube2.init();
 
-    cube_r = 0;
-    cube_c = 1;
+    cube_r = levels_start[1][0];
+    cube_c = levels_start[1][1];
     horizontal = false;
     horizontal_row = false;
 }

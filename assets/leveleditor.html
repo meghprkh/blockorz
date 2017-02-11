@@ -1,0 +1,75 @@
+<html>
+<body>
+  <style>
+  #table button {
+    width: 2em;
+    height: 2em;
+    padding: 0.2em;
+  }
+  </style>
+  <div id="table"></div>
+  <br/>
+  <button onclick="generate()">Generate</button>
+  <button onclick="set_current('NONE')">NONE</button>
+  <button onclick="set_current('NORMAL')">NORMAL</button>
+  <button onclick="set_current('HOLE')">HOLE</button>
+  <br/>
+  <textarea id='output'></textarea>
+  <script>
+  var board = [], current = 'NORMAL', size = 20;
+
+  function get_mnemonic(type) {
+    switch (type) {
+      case 'NONE':
+        return 'X';
+      case 'NORMAL':
+        return 'N';
+      case 'HOLE':
+        return 'O';
+    }
+  }
+
+  function draw() {
+    var html = ''
+    for (var i = 0; i < size; i++) {
+      html += '<div>'
+      for (var j = 0; j < size; j++) {
+        html += `<button onClick='set(${i}, ${j})'>${get_mnemonic(board[i][j])}</button>`
+      }
+      html += '</div>'
+    }
+    document.getElementById('table').innerHTML = html;
+  }
+
+  function set_current(cur) {
+    current = cur;
+  }
+
+  function set(i, j) {
+    board[i][j] = current;
+    draw();
+  }
+
+  for (var i = 0; i < size; i++) {
+    var row = []
+    for (var j = 0; j < size; j++) {
+      row.push('NONE')
+    }
+    board.push(row)
+  }
+
+  draw();
+
+  function generate() {
+    text = ''
+    for (var i = 0; i < size; i++) {
+      for (var j = 0; j < size; j++) {
+        text += 'SQUARE_' + board[i][j] + ', ';
+      }
+      text += '\n';
+    }
+    document.getElementById('output').value = text;
+  }
+  </script>
+</body>
+</html>

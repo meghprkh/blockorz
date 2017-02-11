@@ -13,16 +13,12 @@ public:
     void draw();
     bool move(direction_t dir);
 private:
-    square_t layout[3*4] = {
-        SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL,
-        SQUARE_NORMAL, SQUARE_HOLE, SQUARE_NORMAL, SQUARE_NORMAL,
-        SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL,
-    };
+    square_t *layout;
     Board board;
     Cube cube1, cube2;
     int cube_r, cube_c;
     bool horizontal, horizontal_row;
-    int nrows = 3, ncols = 4;
+    int nrows = 20, ncols = 20;
     square_t get_square(int r, int c);
 };
 
