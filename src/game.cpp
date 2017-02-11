@@ -1,7 +1,7 @@
 #include "game.h"
 
 void Game::init() {
-    board.init();
+    board.init(layout, nrows, ncols);
     cube1.init();
     cube2.init();
 
@@ -106,5 +106,5 @@ bool Game::move(direction_t dir) {
 
 square_t Game::get_square(int r, int c) {
     if (r >= nrows || c >= ncols || r < 0 || c < 0) return SQUARE_NONE;
-    else return layout[r][c];
+    else return layout[r * nrows + c];
 }

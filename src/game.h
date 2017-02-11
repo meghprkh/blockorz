@@ -13,10 +13,10 @@ public:
     void draw();
     bool move(direction_t dir);
 private:
-    square_t layout[3][4] = {
-        {SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL},
-        {SQUARE_NORMAL, SQUARE_HOLE, SQUARE_NORMAL, SQUARE_NORMAL},
-        {SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL},
+    square_t layout[3*4] = {
+        SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL,
+        SQUARE_NORMAL, SQUARE_HOLE, SQUARE_NORMAL, SQUARE_NORMAL,
+        SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL, SQUARE_NORMAL,
     };
     Board board;
     Cube cube1, cube2;
