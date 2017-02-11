@@ -13,6 +13,7 @@ public:
     glm::vec3 position;
 private:
     VAO* object = NULL;
+    VAO* object_edge = NULL;
 };
 
 #endif // SQUARE_H
