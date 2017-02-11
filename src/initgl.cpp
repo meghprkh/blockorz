@@ -15,6 +15,9 @@ void initGL (GLFWwindow* window, int width, int height)
     cube.init();
     cube.set_position(0, 0, 0);
 
+    square.init();
+    square.set_position(0, -1-0.05, 0);
+
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "Sample_GL.vert", "Sample_GL.frag" );
     // Get a handle for our "MVP" uniform

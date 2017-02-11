@@ -37,4 +37,5 @@ void draw ()
     b1.draw();
     b2.draw();
     cube.draw();
+    square.draw();
 }
