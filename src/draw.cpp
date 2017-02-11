@@ -36,6 +36,5 @@ void draw ()
     // Scene render
     b1.draw();
     b2.draw();
-    cube.draw();
-    board.draw();
+    game.draw();
 }
