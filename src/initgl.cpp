@@ -12,6 +12,8 @@ void initGL (GLFWwindow* window, int width, int height)
     b1.set_position(3, 0);
     b2 = Brick(BRICK_BLACK);
     b2.set_position(-3, 0);
+    cube.init();
+    cube.set_position(0, 0, 0);
 
     // Create and compile our GLSL program from the shaders
     programID = LoadShaders( "Sample_GL.vert", "Sample_GL.frag" );
@@ -22,7 +24,7 @@ void initGL (GLFWwindow* window, int width, int height)
     reshapeWindow (window, width, height);
 
     // Background color of the scene
-    glClearColor (1, 1, 1, 0.0f); // R, G, B, A
+    glClearColor (.5,.5,.5, 0.0f); // R, G, B, A
     glClearDepth (1.0f);
 
     glEnable (GL_DEPTH_TEST);

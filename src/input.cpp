@@ -40,5 +40,13 @@ void mouseButton (GLFWwindow* window, int button, int action, int mods) {
 
 /* Process continuous input */
 void tick_input(GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_LEFT)) b1.position.x -= 0.05;
+    if (glfwGetKey(window, GLFW_KEY_LEFT)) cube.position.x -= 0.05;
+    if (glfwGetKey(window, GLFW_KEY_RIGHT)) cube.position.x += 0.05;
+    if (glfwGetKey(window, GLFW_KEY_UP)) cube.position.y += 0.05;
+    if (glfwGetKey(window, GLFW_KEY_DOWN)) cube.position.y -= 0.05;
+    if (glfwGetKey(window, GLFW_KEY_A)) cube.position.z += 0.05;
+    if (glfwGetKey(window, GLFW_KEY_S)) cube.position.z -= 0.05;
+    if (glfwGetKey(window, GLFW_KEY_SPACE)) camera_rotation_angle += 5;
+    if (glfwGetKey(window, GLFW_KEY_Z)) camera_y += 0.05;
+    if (glfwGetKey(window, GLFW_KEY_X)) camera_y -= 0.05;
 }

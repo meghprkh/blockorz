@@ -63,6 +63,7 @@ struct GLMatrices {
 extern GLuint programID;
 extern GLMatrices Matrices;
 extern glm::mat4 VP;
+extern double camera_rotation_angle, camera_y;
 
 // ---- Logic ----
 
