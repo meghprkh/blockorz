@@ -1,5 +1,10 @@
 #include "game.h"
 
+bool rox, roz;
+int tox, toz, toy;
+float rotating = 90;
+int old_r, old_c;
+
 void Game::init() {
     if (level >= nlevels) {
         printf("Game Complete!\n");
@@ -18,20 +23,36 @@ void Game::init() {
 
 void Game::draw() {
     board.draw();
-    cube1.position = glm::vec3(cube_r*2, 0, cube_c*2);
-    if (horizontal) {
-        if (horizontal_row)
-            cube2.position = glm::vec3(cube_r*2, 0, (cube_c+1)*2);
-        else
-            cube2.position = glm::vec3((cube_r+1)*2, 0, cube_c*2);
+    glm::mat4 transform = glm::mat4(1.0f);
+    if (rotating != 90) {
+        cube1.position = glm::vec3(0, 0, 0);
+        cube2.position = glm::vec3(0, 2, 0);
+        glm::mat4 rottx;
+        float rotatig = (tox > 0 || toz < 0) ? -rotating : rotating;
+        if (roz) rottx = glm::rotate((float) (rotatig/180*M_PI), glm::vec3(0, 0, 1));
+        else rottx = glm::rotate((float) (rotatig/180*M_PI), glm::vec3(1, 0, 0));
+        transform = glm::translate(glm::vec3(tox, -1, toz)) * rottx * glm::translate(glm::vec3(-tox, 1, -toz));
+        transform = glm::translate(glm::vec3(old_r*2, 0, old_c*2)) * transform;
+        cube1.draw(transform);
+        cube2.draw(transform);
+        rotating += 1.5;
     } else {
-        cube2.position = glm::vec3(cube_r*2, 2, cube_c*2);
+        cube1.position = glm::vec3(cube_r*2, 0, cube_c*2);
+        if (horizontal) {
+            if (horizontal_row)
+                cube2.position = glm::vec3(cube_r*2, 0, (cube_c+1)*2);
+            else
+                cube2.position = glm::vec3((cube_r+1)*2, 0, cube_c*2);
+        } else {
+            cube2.position = glm::vec3(cube_r*2, 2, cube_c*2);
+        }
+        cube1.draw();
+        cube2.draw();
     }
-    cube1.draw();
-    cube2.draw();
 }
 
 bool Game::move(direction_t dir) {
+    old_r = cube_r; old_c = cube_c;
     if (horizontal) {
         if (horizontal_row) {
             switch (dir) {
@@ -70,22 +91,31 @@ bool Game::move(direction_t dir) {
         }
     } else {
         horizontal = true;
+        rotating = 0;
         switch (dir) {
         case DIR_UP:
             cube_r += 1;
             horizontal_row = false;
+            rox = false; roz = true;
+            tox = 1; toz = 0;
             break;
         case DIR_DOWN:
             cube_r -= 2;
             horizontal_row = false;
+            rox = false; roz = true;
+            tox = -1; toz = 0;
             break;
         case DIR_LEFT:
             cube_c -= 2;
             horizontal_row = true;
+            rox = true; roz = false;
+            tox = 0; toz = -1;
             break;
         case DIR_RIGHT:
             cube_c += 1;
             horizontal_row = true;
+            rox = true; roz = false;
+            tox = 0; toz = 1;
             break;
         }
     }
