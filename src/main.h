@@ -71,7 +71,7 @@ extern double camera_rotation_angle, camera_y, camera_zoom, screen_center_x, scr
 
 enum brick_color_t {BRICK_RED, BRICK_GREEN, BRICK_BLACK};
 enum direction_t {DIR_UP, DIR_RIGHT, DIR_DOWN, DIR_LEFT};
-enum square_t {SQUARE_NONE, SQUARE_HOLE, SQUARE_NORMAL};
+enum square_t {SQUARE_NONE, SQUARE_HOLE, SQUARE_NORMAL, SQUARE_WEAK};
 
 // ---- Levels ----
 extern int nlevels;

@@ -1,7 +1,8 @@
 #include "square.h"
 
-void Square::init()
+void Square::init(square_t type)
 {
+    this->type = type;
     static const GLfloat vertex_buffer_data[] = {
         1.000000, -0.050000, 1.000000,
         -1.000000, -0.050000, -1.000000,
@@ -150,12 +151,12 @@ void Square::init()
         -1.001000, 0.051000, 1.001000,
     };
 
-    this->object = create3DObject(GL_TRIANGLES, 12*3, vertex_buffer_data, .75, .25, .35, GL_FILL);
+    this->object = create3DObject(GL_TRIANGLES, 12*3, vertex_buffer_data, type == SQUARE_NORMAL ? .75 : .45, .25, .35, GL_FILL);
     this->object_edge = create3DObject(GL_TRIANGLES, 24*3, edge_vertex_buffer_data, 0.75, .15, .25, GL_FILL);
 }
 
 void Square::draw() {
-    if (this->object == NULL) return;
+    if (this->object == NULL || type == SQUARE_HOLE || type == SQUARE_NONE) return;
     Matrices.model = glm::mat4(1.0f);
     glm::mat4 translate = glm::translate (this->position);        // glTranslatef
     Matrices.model *= translate;

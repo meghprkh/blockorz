@@ -171,7 +171,7 @@ bool Game::move(direction_t dir) {
             printf("Completed Level %d!\n", level+1);
             level++;
             init();
-        } else if (h == SQUARE_NONE) return false;
+        } else if (h == SQUARE_NONE || h == SQUARE_WEAK) return false;
     }
     return true;
 }
