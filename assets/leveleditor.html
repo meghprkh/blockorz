@@ -10,23 +10,27 @@
   <div id="table"></div>
   <br/>
   <button onclick="generate()">Generate</button>
-  <button onclick="set_current('NONE')">NONE</button>
-  <button onclick="set_current('NORMAL')">NORMAL</button>
-  <button onclick="set_current('HOLE')">HOLE</button>
+  <span id='buttons'></span>
   <br/>
   <textarea id='output'></textarea>
   <script>
   var board = [], current = 'NORMAL', size = 20;
 
+  var types = {
+    'NONE': 'X',
+    'NORMAL': 'N',
+    'HOLE': 'O',
+    'WEAK': 'W',
+    'B1': '1',
+    'B1SX': 'X1',
+    'B1SO': 'O1',
+    'B2': '2',
+    'B2SX': 'X2',
+    'B2SO': 'O2'
+  }
+
   function get_mnemonic(type) {
-    switch (type) {
-      case 'NONE':
-        return 'X';
-      case 'NORMAL':
-        return 'N';
-      case 'HOLE':
-        return 'O';
-    }
+    return types[type];
   }
 
   function draw() {
@@ -57,6 +61,8 @@
     }
     board.push(row)
   }
+
+  document.getElementById('buttons').innerHTML = Object.keys(types).map(type => `<button onclick="set_current('${type}')">${type}</button>`).join(' ')
 
   draw();
 
