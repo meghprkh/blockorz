@@ -1,10 +1,12 @@
 #include "game.h"
+#include "glm/ext.hpp"
 
 bool rox, roz;
 int tox, toz, toy;
 float rotating = 90;
 int old_r, old_c;
-bool old_horizontal, old_horizontal_row;
+bool old_horizontal = false, old_horizontal_row = false;
+int vfrot = 0, hfrot = 0;
 
 void Game::init() {
     if (level >= nlevels) {
@@ -20,54 +22,59 @@ void Game::init() {
     cube_c = levels_start[level][1];
     horizontal = false;
     horizontal_row = false;
+
+    old_r = cube_r;
+    old_c = cube_c + 1;
+    old_horizontal = old_horizontal_row = true;
+    rotating = 90;
+    rox = true; roz = false;
+    tox = 0; toz = -2;
 }
 
 void Game::draw() {
     board.draw();
     glm::mat4 transform = glm::mat4(1.0f);
-    if (rotating != 90) {
-        glm::mat4 rottx, finalT;
+    glm::mat4 rottx, finalT;
+    glm::vec3 T, hfaxis, vfaxis;
 
-        if (old_horizontal) {
-            if (old_horizontal_row) {
-                cube1.position = glm::vec3(0, 0, -1);
-                cube2.position = glm::vec3(0, 0, 1);
-                finalT = glm::translate(glm::vec3(0, 0, 1));
-            } else {
-                cube1.position = glm::vec3(-1, 0, 0);
-                cube2.position = glm::vec3(1, 0, 0);
-                finalT = glm::translate(glm::vec3(1, 0, 0));
-            }
+    if (old_horizontal) {
+        if (old_horizontal_row) {
+            cube1.position = glm::vec3(0, 0, -1);
+            cube2.position = glm::vec3(0, 0, 1);
+            finalT = glm::translate(glm::vec3(0, 0, 1));
+            hfaxis = glm::vec3(0, 0, 1);
+            vfaxis = glm::vec3(1, 0, 0);
         } else {
-            cube1.position = glm::vec3(0, 0, 0);
-            cube2.position = glm::vec3(0, 2, 0);
+            cube1.position = glm::vec3(-1, 0, 0);
+            cube2.position = glm::vec3(1, 0, 0);
+            finalT = glm::translate(glm::vec3(1, 0, 0));
+            hfaxis = glm::vec3(1, 0, 0);
+            vfaxis = glm::vec3(0, 0, 1);
         }
-
-        glm::vec3 T = glm::vec3(-tox, 1, -toz);
-        float rotatig = (tox > 0 || toz < 0) ? -rotating : rotating;
-        if (roz) rottx = glm::rotate((float) (rotatig/180*M_PI), glm::vec3(0, 0, 1));
-        else rottx = glm::rotate((float) (rotatig/180*M_PI), glm::vec3(1, 0, 0));
-
-        transform *= glm::translate(-T) * rottx * glm::translate(T);
-        transform = finalT * glm::translate(glm::vec3(old_r*2, 0, old_c*2)) * transform;
-
-        cube1.draw(transform);
-        cube2.draw(transform);
-
-        rotating += 4.5;
+        T = glm::vec3(-tox, 1, -toz);
     } else {
-        cube1.position = glm::vec3(cube_r*2, 0, cube_c*2);
-        if (horizontal) {
-            if (horizontal_row)
-                cube2.position = glm::vec3(cube_r*2, 0, (cube_c+1)*2);
-            else
-                cube2.position = glm::vec3((cube_r+1)*2, 0, cube_c*2);
-        } else {
-            cube2.position = glm::vec3(cube_r*2, 2, cube_c*2);
-        }
-        cube1.draw();
-        cube2.draw();
+        cube1.position = glm::vec3(0, -1, 0);
+        cube2.position = glm::vec3(0, 1, 0);
+        T = glm::vec3(-tox, 2, -toz);
+        finalT = glm::translate(glm::vec3(0, 1, 0));
+        hfaxis = glm::vec3(0, 1, 0);
+        vfaxis = glm::vec3(1, 0, 0);
     }
+
+
+    float rotatig = (tox > 0 || toz < 0) ? -rotating : rotating;
+    if (roz) rottx = glm::rotate((float) (rotatig/180*M_PI), glm::vec3(0, 0, 1));
+    else rottx = glm::rotate((float) (rotatig/180*M_PI), glm::vec3(1, 0, 0));
+
+    transform = glm::rotate((float) (hfrot*M_PI/2), hfaxis) * transform;
+    if (vfrot) transform = glm::scale(-2*hfaxis+glm::vec3(1, 1, 1)) * transform;
+    transform = glm::translate(-T) * rottx * glm::translate(T) * transform;
+    transform = finalT * glm::translate(glm::vec3(old_r*2, 0, old_c*2)) * transform;
+
+    cube1.draw(transform);
+    cube2.draw(transform);
+
+    if (rotating != 90) rotating += 4.5;
 }
 
 bool Game::move(direction_t dir) {
@@ -81,23 +88,27 @@ bool Game::move(direction_t dir) {
                 cube_r += 1;
                 rox = false; roz = true;
                 tox = 1; toz = 0;
+                hfrot++;
                 break;
             case DIR_DOWN:
                 cube_r -= 1;
                 rox = false; roz = true;
                 tox = -1; toz = 0;
+                hfrot--;
                 break;
             case DIR_LEFT:
                 horizontal = horizontal_row = false;
                 cube_c -= 1;
                 rox = true; roz = false;
                 tox = 0; toz = -2;
+                vfrot++;
                 break;
             case DIR_RIGHT:
                 horizontal = horizontal_row = false;
                 cube_c += 2;
                 rox = true; roz = false;
                 tox = 0; toz = 2;
+                vfrot++;
                 break;
             }
         } else {
@@ -107,28 +118,33 @@ bool Game::move(direction_t dir) {
                 cube_r += 2;
                 rox = false; roz = true;
                 tox = 2; toz = 0;
+                vfrot++;
                 break;
             case DIR_DOWN:
                 horizontal = false;
                 cube_r -= 1;
                 rox = false; roz = true;
                 tox = -2; toz = 0;
+                vfrot++;
                 break;
             case DIR_LEFT:
                 cube_c -= 1;
                 rox = true; roz = false;
                 tox = 0; toz = -1;
+                hfrot--;
                 break;
             case DIR_RIGHT:
                 cube_c += 1;
                 rox = true; roz = false;
                 tox = 0; toz = 1;
+                hfrot++;
                 break;
             }
         }
     } else {
         horizontal = true;
         switch (dir) {
+        vfrot++;
         case DIR_UP:
             cube_r += 1;
             horizontal_row = false;
@@ -155,6 +171,10 @@ bool Game::move(direction_t dir) {
             break;
         }
     }
+    hfrot %= 4;
+    vfrot %= 2;
+    // printf("%d %d\n", vfrot, hfrot);
+    // fflush(stdout);
     if (horizontal) {
         square_t h1, h2;
         if (horizontal_row) {
