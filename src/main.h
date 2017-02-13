@@ -56,7 +56,8 @@ struct VAO {
 };
 
 struct GLMatrices {
-    glm::mat4 projection;
+    glm::mat4 projectionP;
+    glm::mat4 projectionO;
     glm::mat4 model;
     glm::mat4 view;
     GLuint MatrixID;
@@ -66,6 +67,7 @@ extern GLuint programID;
 extern GLMatrices Matrices;
 extern glm::mat4 VP;
 extern double camera_rotation_angle, camera_y, camera_zoom, screen_center_x, screen_center_y;
+extern bool camera_ortho;
 
 // ---- Logic ----
 

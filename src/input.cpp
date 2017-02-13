@@ -42,6 +42,9 @@ void keyboardChar (GLFWwindow* window, unsigned int key) {
     case 'q':
         quit(window);
         break;
+    case 'c':
+        camera_ortho = !camera_ortho;
+        break;
     default:
         break;
     }
