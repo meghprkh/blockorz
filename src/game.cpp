@@ -87,6 +87,11 @@ void Game::draw() {
         glm::vec3 target = glm::vec3(transform * glm::vec4(cube2.position, 1));
         glm::vec3 up (0, 1, 0);
         Matrices.view = glm::lookAt(eye, target, up);
+    } else if (camera_view == CAMERA_TOP) {
+        glm::vec3 eye (10, 15, 10);
+        glm::vec3 target (10, 0, 10);
+        glm::vec3 up (1, 0, 0);
+        Matrices.view = glm::lookAt(eye, target, up);
     }
 
     VP = Matrices.view * glm::scale(glm::vec3(exp(camera_zoom)));
