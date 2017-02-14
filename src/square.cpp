@@ -1,4 +1,5 @@
 #include "square.h"
+#include "colors.h"
 
 void Square::init(square_t type)
 {
@@ -151,7 +152,7 @@ void Square::init(square_t type)
         -1.001000, 0.051000, 1.001000,
     };
 
-    this->object = create3DObject(GL_TRIANGLES, 12*3, vertex_buffer_data, type == SQUARE_NORMAL ? .75 : .45, .25, .35, GL_FILL);
+    this->object = create3DObject(GL_TRIANGLES, 12*3, vertex_buffer_data, type == SQUARE_NORMAL ? COLOR_RED : COLOR_GREEN, GL_FILL);
     this->object_edge = create3DObject(GL_TRIANGLES, 24*3, edge_vertex_buffer_data, 0.75, .15, .25, GL_FILL);
 }
 
