@@ -71,6 +71,28 @@ void Game::draw() {
     transform = glm::translate(-T) * rottx * glm::translate(T) * transform;
     transform = finalT * glm::translate(glm::vec3(old_r*2, 0, old_c*2)) * transform;
 
+    Matrices.view = glm::mat4(1.0f);
+    if (camera_view == CAMERA_TOWER) {
+        glm::vec3 eye ( 10*cos(camera_rotation_angle*M_PI/180.0f), camera_y, 10*sin(camera_rotation_angle*M_PI/180.0f) );
+        glm::vec3 target (0, 0, 0);
+        glm::vec3 up (0, 1, 0);
+        Matrices.view = glm::lookAt(eye, target, up);
+    } else if (camera_view == CAMERA_FPS) {
+        glm::vec3 eye = glm::vec3(transform * glm::vec4(cube2.position + glm::vec3(1, 0, 0), 1));
+        glm::vec3 target = glm::vec3(transform * glm::vec4(cube2.position + glm::vec3(2, 0, 0), 1));
+        glm::vec3 up (0, 1, 0);
+        Matrices.view = glm::lookAt(eye, target, up);
+    } else if (camera_view == CAMERA_FOLLOW) {
+        glm::vec3 eye = glm::vec3(transform * glm::vec4(cube2.position, 1)) + glm::vec3(-4, 4, -4);
+        glm::vec3 target = glm::vec3(transform * glm::vec4(cube2.position, 1));
+        glm::vec3 up (0, 1, 0);
+        Matrices.view = glm::lookAt(eye, target, up);
+    }
+
+    VP = Matrices.view * glm::scale(glm::vec3(exp(camera_zoom)));
+    if (camera_ortho) VP = Matrices.projectionO * VP;
+    else VP = Matrices.projectionP * VP;
+
     cube1.draw(transform);
     cube2.draw(transform);
 

@@ -74,6 +74,8 @@ extern GLuint programID;
 extern GLMatrices Matrices;
 extern glm::mat4 VP;
 extern double camera_rotation_angle, camera_y, camera_zoom, screen_center_x, screen_center_y;
+enum camera_view_t {CAMERA_TOWER, CAMERA_FPS, CAMERA_FOLLOW};
+extern enum camera_view_t camera_view;
 extern bool camera_ortho;
 
 // ---- Logic ----
