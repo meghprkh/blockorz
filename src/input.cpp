@@ -11,7 +11,7 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
 
     }
     else if (action == GLFW_PRESS) {
-        bool game_status;
+        bool game_status = true;
         switch (key) {
         case GLFW_KEY_ESCAPE:
             quit(window);
