@@ -152,12 +152,18 @@ void Square::init(square_t type)
         -1.001000, 0.051000, 1.001000,
     };
 
-    this->object = create3DObject(GL_TRIANGLES, 12*3, vertex_buffer_data, type == SQUARE_NORMAL ? COLOR_RED : COLOR_GREEN, GL_FILL);
+    color_t col;
+    if (type == SQUARE_NORMAL) col = COLOR_RED;
+    else if (type == SQUARE_WEAK) col = COLOR_GREEN;
+    else if (type == SQUARE_B1SO || type == SQUARE_B2SO) col = COLOR_CANNON1;
+    else if (type == SQUARE_B1SX || type == SQUARE_B2SX) col = COLOR_CANNON2;
+
+    this->object = create3DObject(GL_TRIANGLES, 12*3, vertex_buffer_data, col, GL_FILL);
     this->object_edge = create3DObject(GL_TRIANGLES, 24*3, edge_vertex_buffer_data, 0.75, .15, .25, GL_FILL);
 }
 
 void Square::draw() {
-    if (this->object == NULL || type == SQUARE_HOLE || type == SQUARE_NONE) return;
+    if (this->object == NULL || type == SQUARE_HOLE || type == SQUARE_NONE || (type == SQUARE_B1 && !bridge1) || (type == SQUARE_B2 && !bridge2)) return;
     Matrices.model = glm::mat4(1.0f);
     glm::mat4 translate = glm::translate (this->position);        // glTranslatef
     Matrices.model *= translate;

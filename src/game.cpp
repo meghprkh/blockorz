@@ -8,6 +8,8 @@ int old_r, old_c;
 bool old_horizontal = false, old_horizontal_row = false;
 int vfrot = 0, hfrot = 0;
 
+bool bridge1 = false, bridge2 = false;
+
 void Game::init() {
     if (level >= nlevels) {
         printf("Game Complete!\n");
@@ -212,6 +214,10 @@ bool Game::move(direction_t dir) {
             h2 = get_square(cube_r+1, cube_c);
         }
         if (h1 == SQUARE_NONE || h2 == SQUARE_NONE) return false;
+        else if (!bridge1 && (h1 == SQUARE_B1 || h2 == SQUARE_B1)) return false;
+        else if (!bridge2 && (h1 == SQUARE_B2 || h2 == SQUARE_B2)) return false;
+        else if (h1 == SQUARE_B1SO || h2 == SQUARE_B1SO) bridge1 = !bridge1;
+        else if (h1 == SQUARE_B2SO || h2 == SQUARE_B2SO) bridge2 = !bridge2;
     } else {
         square_t h = get_square(cube_r, cube_c);
         if (h == SQUARE_HOLE) {
@@ -219,6 +225,10 @@ bool Game::move(direction_t dir) {
             level++;
             init();
         } else if (h == SQUARE_NONE || h == SQUARE_WEAK) return false;
+        else if (!bridge1 && h == SQUARE_B1) return false;
+        else if (!bridge2 && h == SQUARE_B2) return false;
+        else if (h == SQUARE_B1SX || h == SQUARE_B1SO) bridge1 = !bridge1;
+        else if (h == SQUARE_B2SX || h == SQUARE_B2SO) bridge2 = !bridge2;
     }
     return true;
 }
