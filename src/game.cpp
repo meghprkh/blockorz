@@ -9,6 +9,7 @@ bool old_horizontal = false, old_horizontal_row = false;
 int vfrot = 0, hfrot = 0;
 
 bool bridge1 = false, bridge2 = false;
+int falling_anim = 0;
 
 void Game::init() {
     if (level >= nlevels) {
@@ -75,6 +76,12 @@ void Game::draw() {
     transform = glm::translate(-T) * rottx * glm::translate(T) * transform;
     transform = finalT * glm::translate(glm::vec3(old_r*2, 0, old_c*2)) * transform;
 
+    if (falling_anim) {
+        falling_anim -= 2;
+        transform = glm::translate(glm::vec3(0, -(180-falling_anim)/5.0, 0)) * glm::rotate((float) (falling_anim*M_PI/90), glm::vec3(1, 0, 0));
+        transform = finalT * glm::translate(glm::vec3(old_r*2, 0, old_c*2)) * transform;
+    }
+
     Matrices.view = glm::mat4(1.0f);
     if (camera_view == CAMERA_TOWER) {
         glm::vec3 eye ( 10*cos(camera_rotation_angle*M_PI/180.0f)-2, camera_y, 10*sin(camera_rotation_angle*M_PI/180.0f) + 11 );
@@ -100,7 +107,7 @@ void Game::draw() {
         glm::vec3 eye (10, 2, 10);
         glm::vec3 target ( 10*cos(camera_look_x*M_PI/180.0f)*sin(camera_look_y*M_PI/180.0f), 10*cos(camera_look_y*M_PI/180.0f), 10*sin(camera_look_x*M_PI/180.0f)*sin(camera_look_y*M_PI/180.0f) );
         // cout << camera_look_x << ' ' << camera_look_y << ' ' << glm::to_string(target) << endl;
-        glm::vec3 up (1, 1, 1);
+        glm::vec3 up (0, 1, 0);
         Matrices.view = glm::lookAt(eye, target, up);
     }
 
@@ -251,6 +258,7 @@ square_t Game::get_square(int r, int c) {
 }
 
 void Game::lose() {
+    falling_anim = 180;
     if (life.decrease()) { quit(window); }
     this->init();
 }
