@@ -31,10 +31,11 @@ void Game::init() {
     rotating = 90;
     rox = true; roz = false;
     tox = 0; toz = -2;
+
+    score.update(0);
 }
 
 void Game::draw() {
-    board.draw();
     glm::mat4 transform = glm::mat4(1.0f);
     glm::mat4 rottx, finalT;
     glm::vec3 T, hfaxis, vfaxis;
@@ -106,6 +107,8 @@ void Game::draw() {
     if (camera_ortho) VP = Matrices.projectionO * VP;
     else VP = Matrices.projectionP * VP;
 
+    board.draw();
+    score.draw();
     cube1.draw(transform);
     cube2.draw(transform);
 
@@ -113,6 +116,7 @@ void Game::draw() {
 }
 
 bool Game::move(direction_t dir) {
+    score.add();
     old_r = cube_r; old_c = cube_c;
     old_horizontal = horizontal; old_horizontal_row = horizontal_row;
     rotating = 0;

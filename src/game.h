@@ -4,6 +4,7 @@
 #include "main.h"
 #include "board.h"
 #include "cube.h"
+#include "score.h"
 
 class Game
 {
@@ -21,6 +22,7 @@ private:
     int nrows = 20, ncols = 20;
     square_t get_square(int r, int c);
     int level = 0;
+    Score score;
 };
 
 #endif // GAME_H
