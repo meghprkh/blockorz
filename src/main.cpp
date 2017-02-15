@@ -21,8 +21,12 @@ int main (int argc, char** argv)
 
     Timer t60(1/60.0), t240(1/240.0);
 
+    audio_init();
+
     /* Draw in loop */
     while (!glfwWindowShouldClose(window)) {
+        audio_play();
+
         // Process timers
 
         if (t60.processTick()) {

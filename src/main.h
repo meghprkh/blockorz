@@ -90,4 +90,9 @@ extern int nlevels;
 extern square_t levels[][400];
 extern int levels_start[][2];
 
+// Audio
+void audio_init();
+void audio_play();
+void audio_close();
+
 #endif
