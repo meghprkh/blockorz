@@ -1,7 +1,7 @@
 #include "main.h"
 #include "assets.h"
 
-double camera_rotation_angle = -170, camera_y = 8, camera_zoom = 0, camera_look_x = 0, camera_look_y = 0;
+double camera_rotation_angle = -170, camera_y = 8, camera_zoom = 0, camera_look_x = -170, camera_look_y = 60;
 bool camera_ortho;
 camera_view_t camera_view;
 
