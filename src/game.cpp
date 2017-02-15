@@ -33,6 +33,7 @@ void Game::init() {
     tox = 0; toz = -2;
 
     score.update(0);
+    life.init();
 }
 
 void Game::draw() {
@@ -109,6 +110,7 @@ void Game::draw() {
 
     board.draw();
     score.draw();
+    life.draw();
     cube1.draw(transform);
     cube2.draw(transform);
 
@@ -246,4 +248,9 @@ bool Game::move(direction_t dir) {
 square_t Game::get_square(int r, int c) {
     if (r >= nrows || c >= ncols || r < 0 || c < 0) return SQUARE_NONE;
     else return layout[r * nrows + c];
+}
+
+void Game::lose() {
+    if (life.decrease()) { quit(window); }
+    this->init();
 }

@@ -5,6 +5,7 @@
 #include "board.h"
 #include "cube.h"
 #include "score.h"
+#include "life.h"
 
 class Game
 {
@@ -13,6 +14,7 @@ public:
     void init();
     void draw();
     bool move(direction_t dir);
+    void lose();
 private:
     square_t *layout;
     Board board;
@@ -23,6 +25,7 @@ private:
     square_t get_square(int r, int c);
     int level = 0;
     Score score;
+    Life life;
 };
 
 #endif // GAME_H

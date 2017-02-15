@@ -31,7 +31,7 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
         default:
             break;
         }
-        if (!game_status) game.init();
+        if (!game_status) game.lose();
     }
 }
 
