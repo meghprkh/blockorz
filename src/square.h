@@ -14,6 +14,7 @@ public:
 private:
     VAO* object = NULL;
     VAO* object_edge = NULL;
+    VAO* object_switch = NULL;
     square_t type;
 };
 

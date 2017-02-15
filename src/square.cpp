@@ -1,5 +1,6 @@
 #include "square.h"
 #include "colors.h"
+#include "models.h"
 
 void Square::init(square_t type)
 {
@@ -160,6 +161,8 @@ void Square::init(square_t type)
 
     this->object = create3DObject(GL_TRIANGLES, 12*3, vertex_buffer_data, col, GL_FILL);
     this->object_edge = create3DObject(GL_TRIANGLES, 24*3, edge_vertex_buffer_data, 0.75, .15, .25, GL_FILL);
+    if (type == SQUARE_B1SO || type == SQUARE_B2SO) this->object_switch = create3DObject(GL_TRIANGLES, switchot * 3, switcho, COLOR_LASER, GL_FILL);
+    else if (type == SQUARE_B1SX || type == SQUARE_B2SX) this->object_switch = create3DObject(GL_TRIANGLES, switchxt * 3, switchx, COLOR_LASER, GL_FILL);
 }
 
 void Square::draw() {
@@ -171,6 +174,9 @@ void Square::draw() {
     glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
     draw3DObject(this->object);
     draw3DObject(this->object_edge);
+    MVP = VP * glm::translate(glm::vec3(0, 0.1, 0)) * Matrices.model;
+    glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
+    if (this->object_switch) draw3DObject(this->object_switch);
 }
 
 void Square::set_position(float x, float y, float z) {
