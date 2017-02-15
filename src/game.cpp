@@ -11,7 +11,7 @@ int vfrot = 0, hfrot = 0;
 bool bridge1 = false, bridge2 = false;
 int falling_anim = 0, game_over_anim = -1;
 
-void Game::init() {
+void Game::init(int cube_r, int cube_c) {
     if (level >= nlevels) {
         printf("Game Complete!\n");
         quit(window);
@@ -21,11 +21,11 @@ void Game::init() {
     cube1.init();
     cube2.init();
 
-    cube_r = levels_start[level][0];
-    cube_c = levels_start[level][1];
     horizontal = false;
     horizontal_row = false;
 
+    this->cube_r = cube_r;
+    this->cube_c = cube_c;
     old_r = cube_r;
     old_c = cube_c + 1;
     old_horizontal = old_horizontal_row = true;
@@ -33,8 +33,12 @@ void Game::init() {
     rox = true; roz = false;
     tox = 0; toz = -2;
 
-    score.update(0);
     life.init();
+}
+
+void Game::init() {
+    this->init(levels_start[level][0], levels_start[level][1]);
+    score.update(0);
 }
 
 void Game::draw() {
@@ -266,6 +270,14 @@ bool Game::move(direction_t dir) {
         else if (!bridge2 && h == SQUARE_B2) return false;
         else if (h == SQUARE_B1SX || h == SQUARE_B1SO) bridge1 = !bridge1;
         else if (h == SQUARE_B2SX || h == SQUARE_B2SO) bridge2 = !bridge2;
+        else if (h == SQUARE_TELEPORT) {
+            for (int i = 0; i < nrows; i++) {
+                for (int j = 0; j < ncols; j++) {
+                    if (get_square(i, j) == SQUARE_TELEPORT && (i != cube_r || j != cube_c))
+                        this->init(i, j);
+                }
+            }
+        }
     }
     return true;
 }

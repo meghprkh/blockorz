@@ -11,6 +11,7 @@ class Game
 {
 public:
     Game() {}
+    void init(int cube_r, int cube_c);
     void init();
     void draw();
     bool move(direction_t dir);
