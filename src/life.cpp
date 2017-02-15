@@ -8,7 +8,7 @@ Life::Life() {
 }
 
 void Life::init() {
-    for (int i = 0; i < 5; i++) hearts[i] = Heart(-3.7+i*1.2, 8);
+    for (int i = 0; i < 5; i++) hearts[i] = Heart(4+i*1.2, 8);
 }
 
 bool Life::decrease() {

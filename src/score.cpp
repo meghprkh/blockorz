@@ -14,7 +14,7 @@ void Score::update(int score) {
     sprintf(scorestr, "%d", score);
     digslen = strlen(scorestr);
     for (int i = digslen - 1; i >= 0; i--) {
-        digs[i] = Digit(scorestr[i], 5 - 1.5*(digslen - i), 7);
+        digs[i] = Digit(scorestr[i], 20 - 0.7*(digslen - i), 7.5);
     }
 }
 

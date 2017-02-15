@@ -77,8 +77,8 @@ void Game::draw() {
 
     Matrices.view = glm::mat4(1.0f);
     if (camera_view == CAMERA_TOWER) {
-        glm::vec3 eye ( 10*cos(camera_rotation_angle*M_PI/180.0f), camera_y, 10*sin(camera_rotation_angle*M_PI/180.0f) );
-        glm::vec3 target (0, 0, 0);
+        glm::vec3 eye ( 10*cos(camera_rotation_angle*M_PI/180.0f)-2, camera_y, 10*sin(camera_rotation_angle*M_PI/180.0f) + 11 );
+        glm::vec3 target (0, 0, 11);
         glm::vec3 up (0, 1, 0);
         Matrices.view = glm::lookAt(eye, target, up);
     } else if (camera_view == CAMERA_FPS) {
