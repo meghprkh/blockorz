@@ -46,16 +46,23 @@ void keyboardChar (GLFWwindow* window, unsigned int key) {
         camera_ortho = !camera_ortho;
         break;
     case 'v':
-        camera_view = (camera_view_t) ((camera_view + 1) % 4);
+        camera_view = (camera_view_t) ((camera_view + 1) % 5);
         break;
     default:
         break;
     }
 }
 
+int prev_xpos = 0, prev_ypos = 0;
+
 /* Executed when a mouse button is pressed/released */
 void mouseButton (GLFWwindow* window, int button, int action, int mods) {
-
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+        prev_xpos = xpos;
+        prev_ypos = ypos;
+    }
 }
 
 /* Process continuous input */
@@ -69,6 +76,19 @@ void tick_input(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_SPACE)) camera_rotation_angle += 5;
     if (glfwGetKey(window, GLFW_KEY_Z)) camera_y += 0.05;
     if (glfwGetKey(window, GLFW_KEY_X)) camera_y -= 0.05;
+
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+    double xpos, ypos;
+    glfwGetCursorPos(window, &xpos, &ypos);
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+        camera_look_x -= -360 + (xpos - prev_xpos) * 90 / width;
+        camera_look_y -= -360 + (ypos - prev_ypos) * 90 / height;
+        camera_look_x = camera_look_x > 360 ? camera_look_x - ((int) (camera_look_x / 360))*360 : camera_look_x;
+        camera_look_y = camera_look_y > 360 ? camera_look_y - ((int) (camera_look_y / 360))*360 : camera_look_y;
+        prev_xpos = xpos;
+        prev_ypos = ypos;
+    }
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {

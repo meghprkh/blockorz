@@ -94,6 +94,12 @@ void Game::draw() {
         glm::vec3 target (10, 0, 10);
         glm::vec3 up (1, 0, 0);
         Matrices.view = glm::lookAt(eye, target, up);
+    } else if (camera_view == CAMERA_HELICOPTER) {
+        glm::vec3 eye (10, 2, 10);
+        glm::vec3 target ( 10*cos(camera_look_x*M_PI/180.0f)*sin(camera_look_y*M_PI/180.0f), 10*cos(camera_look_y*M_PI/180.0f), 10*sin(camera_look_x*M_PI/180.0f)*sin(camera_look_y*M_PI/180.0f) );
+        // cout << camera_look_x << ' ' << camera_look_y << ' ' << glm::to_string(target) << endl;
+        glm::vec3 up (1, 1, 1);
+        Matrices.view = glm::lookAt(eye, target, up);
     }
 
     VP = Matrices.view * glm::scale(glm::vec3(exp(camera_zoom)));
