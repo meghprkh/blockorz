@@ -92,8 +92,12 @@ void Game::draw() {
 
     if (falling_anim) {
         falling_anim -= 2;
-        transform = glm::translate(glm::vec3(0, -(180-falling_anim)/5.0, 0)) * glm::rotate((float) (falling_anim*M_PI/90), glm::vec3(1, 0, 0));
-        transform = finalT * glm::translate(glm::vec3(old_r*2, 0, old_c*2)) * transform;
+        glm::vec3 raxis;
+        if (roz) raxis = glm::vec3(0, 0, 1);
+        else raxis = glm::vec3(1, 0, 0);
+        transform = glm::translate(glm::vec3(0, -(180-falling_anim)/5.0, 0)) * glm::rotate((float) (falling_anim*M_PI/90), raxis);
+        transform = finalT * glm::translate(glm::vec3(cube_r*2, 0, cube_c*2)) * transform;
+        if (falling_anim == 0) this->init();
     }
 
     Matrices.view = glm::mat4(1.0f);
@@ -274,5 +278,4 @@ square_t Game::get_square(int r, int c) {
 void Game::lose() {
     falling_anim = 180;
     if (life.decrease()) { game_over_anim = 360; }
-    this->init();
 }
