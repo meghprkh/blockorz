@@ -8,7 +8,7 @@ int old_r, old_c;
 bool old_horizontal = false, old_horizontal_row = false;
 int vfrot = 0, hfrot = 0;
 
-bool bridge1 = false, bridge2 = false;
+bool bridge1 = false, bridge2 = false, level_won = false;
 int falling_anim = 0, game_over_anim = -1;
 
 void Game::init(int cube_r, int cube_c) {
@@ -31,6 +31,7 @@ void Game::init(int cube_r, int cube_c) {
     old_horizontal = old_horizontal_row = true;
     rotating = 90;
     rox = true; roz = false;
+    level_won = false; bridge1 = false; bridge2 = false;
     tox = 0; toz = -2;
 
     life.init();
@@ -99,7 +100,8 @@ void Game::draw() {
         glm::vec3 raxis;
         if (roz) raxis = glm::vec3(0, 0, 1);
         else raxis = glm::vec3(1, 0, 0);
-        transform = glm::translate(glm::vec3(0, -(180-falling_anim)/5.0, 0)) * glm::rotate((float) (falling_anim*M_PI/90), raxis);
+        transform = glm::translate(glm::vec3(0, -(180-falling_anim)/5.0, 0));
+        if (!level_won) transform = transform * glm::rotate((float) (falling_anim*M_PI/90), raxis);
         transform = finalT * glm::translate(glm::vec3(cube_r*2, 0, cube_c*2)) * transform;
         if (falling_anim == 0) this->init();
     }
@@ -264,7 +266,10 @@ bool Game::move(direction_t dir) {
         if (h == SQUARE_HOLE) {
             printf("Completed Level %d!\n", level+1);
             level++;
-            init();
+            old_r = cube_r; old_c = cube_c;
+            old_horizontal = false;
+            falling_anim = 180;
+            level_won = true;
         } else if (h == SQUARE_NONE || h == SQUARE_WEAK) return false;
         else if (!bridge1 && h == SQUARE_B1) return false;
         else if (!bridge2 && h == SQUARE_B2) return false;
