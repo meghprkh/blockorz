@@ -9,7 +9,7 @@ bool old_horizontal = false, old_horizontal_row = false;
 int vfrot = 0, hfrot = 0;
 
 bool bridge1 = false, bridge2 = false;
-int falling_anim = 0;
+int falling_anim = 0, game_over_anim = -1;
 
 void Game::init() {
     if (level >= nlevels) {
@@ -38,6 +38,20 @@ void Game::init() {
 }
 
 void Game::draw() {
+    if (game_over_anim == 0) quit(window);
+    else if (game_over_anim > 0) {
+        glm::vec3 eye (0, 0, 0);
+        glm::vec3 target ( 10*cos(game_over_anim*M_PI/180.0f), 10, 10*sin(game_over_anim*M_PI/180.0f));
+        glm::vec3 up (0, 1, 0);
+        cube1.position = glm::vec3(0, 0, 0);
+        Matrices.view = glm::lookAt(eye, target, up);
+        VP = Matrices.view * glm::scale(glm::vec3(exp(camera_zoom)));
+        VP = Matrices.projectionP * VP;
+        glm::mat4 transform = glm::mat4(1.0f);
+        cube1.draw(transform);
+        game_over_anim--;
+    }
+
     glm::mat4 transform = glm::mat4(1.0f);
     glm::mat4 rottx, finalT;
     glm::vec3 T, hfaxis, vfaxis;
@@ -259,6 +273,6 @@ square_t Game::get_square(int r, int c) {
 
 void Game::lose() {
     falling_anim = 180;
-    if (life.decrease()) { quit(window); }
+    if (life.decrease()) { game_over_anim = 360; }
     this->init();
 }
