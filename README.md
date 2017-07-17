@@ -1,6 +1,8 @@
 Graphics Assignment 2
 =====================
 
+3D block game in OpenGL 3. More details in [the statement pdf](Assignment2.pdf)
+
 Megh Parikh - 201501184
 =======================
 
@@ -37,5 +39,11 @@ Extra features
 - Level editor and blender obj file parser
 - Modular codebase
 
+
+License
+-------
+The MIT License https://meghprkh.mit-license.org/
+
+Copyright &copy; 2017 Megh Parikh <meghprkh@gmail.com>
 
 Music Credits: Eric Matyas (http://www.soundimage.org)
