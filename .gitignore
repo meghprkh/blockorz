@@ -74,3 +74,5 @@ Thumbs.db
 # Exclude blender's exported assets from exclusion
 !assets/*.obj
 
+# Exclude build dir
+build/
