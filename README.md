@@ -3,6 +3,16 @@ Graphics Assignment 2
 
 3D block game in OpenGL 3. More details in [the statement pdf](Assignment2.pdf)
 
+Features at a glance
+--------------------
+
+| Features | Demos |
+|----------|-------|
+| World orbitting, Normal movement, Animation and Game Logic | ![normal.gif](demos/normal.gif)       |
+| Isometric style view usign an orthographic camera          | ![isometric.gif](demos/isometric.gif) |
+| Other views - First-person view, third person view, top view, top orthographic view | ![otherviews.gif](demos/otherviews.gif) |
+| Helicopter view - More intuitive blender-like perspective view with camera panning & movement | ![helicopter.gif](demos/helicopter.gif) |
+
 Megh Parikh - 201501184
 =======================
 
