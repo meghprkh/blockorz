@@ -91,7 +91,7 @@ void Game::draw() {
     else rottx = glm::rotate((float) (rotatig/180*M_PI), glm::vec3(1, 0, 0));
 
     transform = glm::rotate((float) (hfrot*M_PI/2), hfaxis) * transform;
-    if (vfrot) transform = glm::scale(-2*hfaxis+glm::vec3(1, 1, 1)) * transform;
+    if (vfrot) transform = glm::scale(-2.0f*hfaxis+glm::vec3(1, 1, 1)) * transform;
     transform = glm::translate(-T) * rottx * glm::translate(T) * transform;
     transform = finalT * glm::translate(glm::vec3(old_r*2, 0, old_c*2)) * transform;
 
